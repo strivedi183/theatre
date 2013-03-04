@@ -4,6 +4,7 @@ class TheatersController < ApplicationController
   end
   def purchase
     ticket = Ticket.find(params[:id])
+    ticket.is_bought = true
     @auth.tickets << ticket
     render :json => ticket
   end

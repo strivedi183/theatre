@@ -3,7 +3,7 @@ Theatre::Application.routes.draw do
 
   resources :users, :only => [:new, :create]
   resources :movies, :only => [:index]
-  resources :theaters, :only => [:index, :purchase] do
+  resources :theaters, :only => [:index, :purchase, :new] do
     member do
       post 'purchase'
     end

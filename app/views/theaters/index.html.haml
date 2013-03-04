@@ -1,12 +1,19 @@
 .row
   .twelve.columns
+    - if !@auth.nil?
+      = link_to('New Theater', new_theater_path, :class => 'button') if @auth.is_admin?
     %table
       %tr
         %th Theater Name
         %th Theater Location
         %th Movie Playing
         %th # of Tickets
-        %th Ticket Ids
+        - if !@auth.nil?
+          %th Tickets
+        - if !@auth.nil?
+          %th Buy Tickets
+        - if !@auth.nil?
+          %th.hide Refund Tickets
       - @theaters.each do |theater|
         %tr
           %td
@@ -17,19 +24,25 @@
             = theater.movie.name
           %td
             = theater.tickets.length
-          %td.hide
-            = theater.id
-          %td
-            .tickets
-              - theater.tickets.each do |ticket|
-                .ticket
-                .ticket_id.hide= ticket.id
-          %td.hide
-            = form_tag(theaters_purchase_path, :method => 'post') do
-              = hidden_field_tag 'ticket_id'
-              = submit_tag 'Buy Tickets', :class => 'btn_buy_ticket button success tiny'
-          %td.buy
-            = button_tag 'Buy Tickets', :class => 'btn_buy_ticket button success tiny'
-          %td.hide.refund
-            = button_tag 'Refund Tickets', :class => 'btn_refund_ticket button alert tiny'
+          - if !@auth.nil?
+            %td.hide
+              = theater.id
+          - if !@auth.nil?
+            %td
+              .tickets
+                - theater.tickets.each do |ticket|
+                  .ticket
+                  .ticket_id.hide= ticket.id
+                  .ticket_bought.hide= ticket.is_bought?
+          - if !@auth.nil?
+            %td.hide
+              = form_tag(theaters_purchase_path, :method => 'post') do
+                = hidden_field_tag 'ticket_id'
+                = submit_tag 'Buy Tickets', :class => 'btn_buy_ticket button success tiny'
+          - if !@auth.nil?
+            %td.buy
+              = button_tag 'Buy Tickets', :class => 'btn_buy_ticket button success tiny'
+          - if !@auth.nil?
+            %td.hide.refund
+              = button_tag 'Refund Tickets', :class => 'btn_refund_ticket button alert tiny'
 

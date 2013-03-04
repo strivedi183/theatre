@@ -7,6 +7,8 @@ u1 = User.create(:name => 'Bob', :email => 'bob@bob.com', :password => 'bob', :p
 u2 = User.create(:name => 'Joe', :email => 'joe@joe.com', :password => 'joe', :password_confirmation => 'joe')
 u3 = User.create(:name => 'Sue', :email => 'sue@sue.com', :password => 'sue', :password_confirmation => 'sue')
 u4 = User.create(:name => 'Admin', :email => 'admin@admin.com', :password => 'admin', :password_confirmation => 'admin')
+u4.is_admin = true
+u4.save
 
 m1 = Movie.create(:name => 'Movie 1')
 m2 = Movie.create(:name => 'Movie 2')

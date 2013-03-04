@@ -7,6 +7,11 @@ $(function(){
 var ticket_id = 0;
 var theater_id = 0;
 
+function if_bought()
+{
+
+}
+
 function convert_ticket_box()
 {
   $('.ticket').each(change_ticket_box);
@@ -16,12 +21,16 @@ function change_ticket_box(index, element)
 {
   var box = $(element);
   box.addClass('ticket_box');
+  var test = box.next().next();
+  if (test.text() != 'false')
+  {
+    box.css('background-color','gray');
+  }
   box.removeClass('ticket');
 }
 
 function get_ticket_info()
 {
-  console.log('test');
   var box = $(this);
   box.css('background-color','gray');
   var theater = box.parent().parent().prev();
@@ -33,8 +42,6 @@ function get_ticket_info()
 function buy_ticket()
 {
   var token = $('input[name=authenticity_token]').val();
-  console.log(theater_id);
-  console.log(ticket_id);
 
   $.ajax({
     dataType: "json",
@@ -50,6 +57,6 @@ function display_tickets_bought(message)
   console.log(message);
   var number = parseInt(message.id);
   console.log(number);
-  var ticket_spot = $(table).find('.ticket_id').eq(number);
+  var ticket_spot = $('table').find('.ticket_id').eq(number);
   console.log(ticket_spot);
 }
