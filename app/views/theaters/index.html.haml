@@ -1,0 +1,35 @@
+.row
+  .twelve.columns
+    %table
+      %tr
+        %th Theater Name
+        %th Theater Location
+        %th Movie Playing
+        %th # of Tickets
+        %th Ticket Ids
+      - @theaters.each do |theater|
+        %tr
+          %td
+            = theater.name
+          %td
+            = theater.location
+          %td
+            = theater.movie.name
+          %td
+            = theater.tickets.length
+          %td.hide
+            = theater.id
+          %td
+            .tickets
+              - theater.tickets.each do |ticket|
+                .ticket
+                .ticket_id.hide= ticket.id
+          %td.hide
+            = form_tag(theaters_purchase_path, :method => 'post') do
+              = hidden_field_tag 'ticket_id'
+              = submit_tag 'Buy Tickets', :class => 'btn_buy_ticket button success tiny'
+          %td.buy
+            = button_tag 'Buy Tickets', :class => 'btn_buy_ticket button success tiny'
+          %td.hide.refund
+            = button_tag 'Refund Tickets', :class => 'btn_refund_ticket button alert tiny'
+
